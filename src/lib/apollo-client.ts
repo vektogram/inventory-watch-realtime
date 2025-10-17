@@ -1,23 +1,25 @@
 import { ApolloClient, InMemoryCache, HttpLink, split } from '@apollo/client';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { createClient } from 'graphql-ws';
+import { Socket as PhoenixSocket } from 'phoenix';
+import * as AbsintheSocket from '@absinthe/socket';
+import { createAbsintheSocketLink } from '@absinthe/socket-apollo-link';
 
-// Configure your backend endpoint here
-const HTTP_ENDPOINT = import.meta.env.VITE_GRAPHQL_HTTP_ENDPOINT || 'http://localhost:4000/graphql';
+const HTTP_ENDPOINT =
+  import.meta.env.VITE_GRAPHQL_HTTP_ENDPOINT || 'http://localhost:4000/api/graphql';
 const WS_ENDPOINT = import.meta.env.VITE_GRAPHQL_WS_ENDPOINT || 'ws://localhost:4000/socket';
 
-const httpLink = new HttpLink({
-  uri: HTTP_ENDPOINT,
+const httpLink = new HttpLink({ uri: HTTP_ENDPOINT });
+
+// Phoenix socket client handles the channel protocol Absinthe expects.
+const phoenixSocket = new PhoenixSocket(WS_ENDPOINT, {
+  params: () => ({}),
 });
 
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: WS_ENDPOINT,
-  })
-);
+phoenixSocket.connect();
 
-// Split links based on operation type
+const absintheSocket = AbsintheSocket.create(phoenixSocket);
+const wsLink = createAbsintheSocketLink(absintheSocket);
+
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
@@ -33,9 +35,4 @@ const splitLink = split(
 export const apolloClient = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache(),
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'cache-and-network',
-    },
-  },
 });

@@ -1,7 +1,7 @@
 import { gql, useQuery, useSubscription } from '@apollo/client';
 import { Product } from '@/types/product';
 import ProductCard from './ProductCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Loader2, AlertCircle, Package } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -17,7 +17,7 @@ const GET_PRODUCTS = gql`
 `;
 
 const STOCK_UPDATED_SUBSCRIPTION = gql`
-  subscription StockUpdated {
+  subscription OnStockUpdated {
     stockUpdated {
       id
       name
@@ -29,27 +29,47 @@ const STOCK_UPDATED_SUBSCRIPTION = gql`
 
 const ProductList = () => {
   const [updatingProducts, setUpdatingProducts] = useState<Set<string>>(new Set());
-  const { loading, error, data, refetch } = useQuery<{ products: Product[] }>(GET_PRODUCTS);
+  const [products, setProducts] = useState<Product[]>([]);
+  const { loading, error, data } = useQuery<{ products: Product[] }>(GET_PRODUCTS);
   
-  const { data: subscriptionData } = useSubscription<{ stockUpdated: Product }>(
-    STOCK_UPDATED_SUBSCRIPTION,
-    {
-      onData: ({ data }) => {
-        if (data.data?.stockUpdated) {
-          const productId = data.data.stockUpdated.id;
-          setUpdatingProducts(prev => new Set(prev).add(productId));
-          setTimeout(() => {
-            setUpdatingProducts(prev => {
-              const newSet = new Set(prev);
-              newSet.delete(productId);
-              return newSet;
-            });
-          }, 2000);
-          refetch();
-        }
-      },
-    }
+  const { data: subscriptionData, loading: subLoading, error: subError } = useSubscription<{ stockUpdated: Product }>(
+    STOCK_UPDATED_SUBSCRIPTION
   );
+
+  useEffect(() => {
+    console.log('🔄 Subscription status:', { 
+      loading: subLoading, 
+      error: subError, 
+      hasData: !!subscriptionData,
+      data: subscriptionData
+    });
+  }, [subLoading, subError, subscriptionData]);
+
+  useEffect(() => {
+    if (data?.products) {
+      setProducts(data.products);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (subscriptionData?.stockUpdated) {
+      console.log('✅ Stock update received:', subscriptionData.stockUpdated);
+      const updatedProduct = subscriptionData.stockUpdated;
+      setProducts(prev => 
+        prev.map(p => p.id === updatedProduct.id ? updatedProduct : p)
+      );
+      
+      // Show update animation
+      setUpdatingProducts(prev => new Set(prev).add(updatedProduct.id));
+      setTimeout(() => {
+        setUpdatingProducts(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(updatedProduct.id);
+          return newSet;
+        });
+      }, 2000);
+    }
+  }, [subscriptionData]);
 
   if (loading) {
     return (
@@ -89,8 +109,6 @@ const ProductList = () => {
       </div>
     );
   }
-
-  const products = data?.products || [];
 
   if (products.length === 0) {
     return (
