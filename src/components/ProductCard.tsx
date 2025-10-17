@@ -14,11 +14,20 @@ const ProductCard = ({ product, isUpdating = false }: ProductCardProps) => {
   const status = getStockStatus(product.stockCount);
 
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
     if (isUpdating) {
       setShowPulse(true);
-      const timer = setTimeout(() => setShowPulse(false), 2000);
-      return () => clearTimeout(timer);
+      timer = setTimeout(() => setShowPulse(false), 2000);
+    } else {
+      setShowPulse(false);
     }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [isUpdating]);
 
   return (
