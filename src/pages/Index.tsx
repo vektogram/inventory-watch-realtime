@@ -1,13 +1,24 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { ApolloProvider } from '@apollo/client/react';
+import { apolloClient } from '@/lib/apollo-client';
+import Header from '@/components/Header';
+import ProductList from '@/components/ProductList';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <ApolloProvider client={apolloClient}>
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-6 py-8">
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-2">Live Inventory</h2>
+            <p className="text-muted-foreground">
+              Real-time product stock monitoring with GraphQL subscriptions
+            </p>
+          </div>
+          <ProductList />
+        </main>
       </div>
-    </div>
+    </ApolloProvider>
   );
 };
 
