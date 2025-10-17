@@ -18,7 +18,7 @@ const ProductCard = ({ product, isUpdating = false }: ProductCardProps) => {
 
     if (isUpdating) {
       setShowPulse(true);
-      timer = setTimeout(() => setShowPulse(false), 2000);
+      timer = setTimeout(() => setShowPulse(false), 1200);
     } else {
       setShowPulse(false);
     }
