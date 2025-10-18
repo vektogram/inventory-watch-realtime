@@ -2,7 +2,7 @@ import { Package } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="bg-black shadow-glow sticky top-0 z-50">
+    <header className="bg-[#3d3936] shadow-glow sticky top-0 z-50">
       <div className="container mx-auto px-6 py-6">
         <div className="flex items-center gap-3">
           <div className="bg-white/20 backdrop-blur-sm p-2 rounded-lg">
