@@ -9,7 +9,7 @@ const Header = () => {
             <Package className="h-8 w-8 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-white">Inventory Watcher</h1>
+            <h1 className="text-3xl font-bold text-white font-instrument-serif">Inventory Watcher</h1>
             <p className="text-white/90 text-sm">Real-time stock monitoring system</p>
           </div>
         </div>
