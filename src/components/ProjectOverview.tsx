@@ -5,7 +5,7 @@ const ProjectOverview = () => (
       <p className="text-muted-foreground">
         The dashboard shows a catalog of products with live stock counts. When a
         stock change happens, the matching card updates instantly and pulses
-        briefly so the change is easy to spot&mdash;no page refresh required.
+        briefly so the change is easy to spot/no page refresh required.
       </p>
     </div>
     <div className="space-y-3">
@@ -22,7 +22,7 @@ const ProjectOverview = () => (
   <h3 className="text-2xl font-semibold font-instrument-serif">Why The Result Matters</h3>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>Teams see inventory movements as they happen, reducing the risk of overselling.</li>
-        <li>The component-based frontend is ready for extra views like charts, filters, or richer product details.</li>
+        <li>The component based frontend is ready for extra views like charts, filters, or richer product details.</li>
         <li>The backend separates data updates from presentation, which keeps the system reliable and easy to extend.</li>
         <li>Containerized services mean the stack can grow horizontally or move clouds without rewrites.</li>
       </ul>
@@ -53,7 +53,7 @@ const ProjectOverview = () => (
       <p className="text-muted-foreground">
         Clone either repository to explore the implementation, or follow the README
         instructions to run the full stack locally. The live site mirrors these
-        open-source projects.
+        open source projects.
       </p>
     </div>
   </section>
