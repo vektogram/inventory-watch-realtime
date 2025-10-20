@@ -1,7 +1,7 @@
 const ProjectOverview = () => (
   <section className="mt-16 max-w-3xl mx-auto space-y-6">
     <div className="space-y-3">
-      <h3 className="text-xl font-semibold">What This Project Delivers</h3>
+  <h3 className="text-3xl font-semibold font-instrument-serif">What This Project Delivers</h3>
       <p className="text-muted-foreground">
         The dashboard shows a catalog of products with live stock counts. When a
         stock change happens, the matching card updates instantly and pulses
@@ -9,7 +9,7 @@ const ProjectOverview = () => (
       </p>
     </div>
     <div className="space-y-3">
-      <h3 className="text-xl font-semibold">How the Experience Works</h3>
+  <h3 className="text-2xl font-semibold font-instrument-serif">How the Experience Works</h3>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>Products live in PostgreSQL with seed data so the UI renders right away.</li>
         <li>An Elixir/Phoenix service exposes the data through a GraphQL API.</li>
@@ -19,7 +19,7 @@ const ProjectOverview = () => (
       </ul>
     </div>
     <div className="space-y-3">
-      <h3 className="text-xl font-semibold">Why The Result Matters</h3>
+  <h3 className="text-2xl font-semibold font-instrument-serif">Why The Result Matters</h3>
       <ul className="list-disc list-inside space-y-2 text-muted-foreground">
         <li>Teams see inventory movements as they happen, reducing the risk of overselling.</li>
         <li>The component-based frontend is ready for extra views like charts, filters, or richer product details.</li>
@@ -28,7 +28,7 @@ const ProjectOverview = () => (
       </ul>
     </div>
     <div className="space-y-3">
-      <h3 className="text-xl font-semibold">Explore The Code</h3>
+  <h3 className="text-2xl font-semibold font-instrument-serif">Explore The Code</h3>
       <p className="text-muted-foreground">
         Frontend (React + TypeScript):{' '}
         <a
