@@ -28,6 +28,21 @@ const ProjectOverview = () => (
       </ul>
     </div>
     <div className="space-y-3">
+      <h3 className="text-3xl font-semibold font-instrument-serif">System Architecture</h3>
+      <p className="text-muted-foreground">
+        This diagram maps how the React client, Phoenix API, PostgreSQL database, and
+        Dokploy-managed infrastructure fit together in the live deployment.
+      </p>
+      <div className="rounded-lg border bg-card p-4 shadow-sm">
+        <img
+          src="/infra.webp"
+          alt="System architecture diagram showing browser, frontend, Phoenix backend, PostgreSQL, and Dokploy on Hetzner."
+          className="w-full rounded-md"
+          loading="lazy"
+        />
+      </div>
+    </div>
+    <div className="space-y-3">
   <h3 className="text-2xl font-semibold font-instrument-serif">Explore The Code</h3>
       <p className="text-muted-foreground">
         Frontend (React + TypeScript):{' '}
